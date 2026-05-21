@@ -1,47 +1,47 @@
 package com.example.banking.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 
 @Table(name = "addresses")
+@Schema(description = "Customer address")
 public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
 
-    private String street;
+    private String addressLine1;
+    private String addressLine2;
     private String city;
     private long pinCode;
     private String state;
     private String country;
 
-    public Address(Long id, String street, String city, long pinCode, String state, String country) {
-        this.id = id;
-        this.street = street;
+    public Address(String addressLine1, String addressLine2, String city, long pinCode, String state, String country) {
+        this.addressLine1 = addressLine1;
+        this.addressLine2 = addressLine2;
         this.city = city;
         this.pinCode = pinCode;
         this.state = state;
         this.country = country;
     }
+    public Address(){}
 
-    public Address(String street, String city, String state, long pin, String country) {
+    public Address(String addressLine1, String addressLine2, String city, String state, long pin, String country) {
     }
 
-    public Long getId() {
-        return id;
+    public String getAddressLine1() {
+        return addressLine1;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
     }
 
-    public String getStreet() {
-        return street;
+    public String getAddressLine2() {
+        return addressLine2;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
     }
 
     public String getCity() {

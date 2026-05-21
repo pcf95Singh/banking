@@ -1,5 +1,8 @@
 package com.example.banking.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Customer full name")
 public class FullName {
     private String firstName;
     private String middleName;

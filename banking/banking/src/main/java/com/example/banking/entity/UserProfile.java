@@ -6,12 +6,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
 @Table(name = "user_information")
 public class UserProfile {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -24,18 +25,22 @@ public class UserProfile {
     private Address customerAddress;
 
     @Email( message = "Invalid email format")
+    @Schema(description = "Customer email address", example = "krishna@gmail.com")
     @Column(name = "email_id", nullable = false)
     private String emailId;
 
-    @Size(max = 10, message = "Invalid mobile number")
+    @Schema(description = "10 digit mobile number", example = "9876543210")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Invalid mobile number")
     @Column(name = "contact_number", unique = true, nullable = false)
     private String mobileNumber;
 
-    @Pattern(regexp = "^[A-Z]{5}[0-9]{4}[A-Z]{1}$", message = "Invalid pan number")
+    @Schema(description = "PAN card number", example = "ABCDE1234F")
+    @Pattern(regexp = "^[A-Z]{5}[0-9]{4}[A-Z]{1}$")
     @Column(name = "pan_number", nullable = false)
     private String panNumber;
 
-    @Size(max = 12, message = "Invalid Aadhaar Number")
+    @Schema(description = "12 digit Aadhaar number", example = "123456789012")
+    @Pattern(regexp = "^[0-9]{12}$")
     @Column(name = "aadhaar_number", nullable = false)
     private String aadhaarNumber;
 
@@ -106,5 +111,9 @@ public class UserProfile {
 
     public void setAadhaarNumber(String aadhaarNumber) {
         this.aadhaarNumber = aadhaarNumber;
+    }
+
+    public UserProfile createUser(UserProfile userProfile) {
+        return userProfile;
     }
 }

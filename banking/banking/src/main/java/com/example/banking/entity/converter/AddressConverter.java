@@ -16,7 +16,8 @@ public class AddressConverter implements AttributeConverter<Address, String> {
             return null;
         }
 
-        return address.getStreet()
+        return address.getAddressLine1()
+                + DELIMITER + address.getAddressLine2()
                 + DELIMITER + address.getCity()
                 + DELIMITER + address.getState()
                 + DELIMITER + address.getPinCode()
@@ -32,12 +33,13 @@ public class AddressConverter implements AttributeConverter<Address, String> {
 
         String[] pieces = dbData.split(DELIMITER, -1);
 
-        String street = pieces[0];
-        String city = pieces[1];
-        String state = pieces[2];
-        long pin = Long.parseLong(pieces[3]);
-        String country = pieces[4];
+        String addressLine1 = pieces[0];
+        String addressLine2 = pieces[1];
+        String city = pieces[2];
+        String state = pieces[3];
+        long pin = Long.parseLong(pieces[4]);
+        String country = pieces[5];
 
-        return new Address(street, city, state, pin, country);
+        return new Address(addressLine1,addressLine2, city, state, pin, country);
     }
 }
