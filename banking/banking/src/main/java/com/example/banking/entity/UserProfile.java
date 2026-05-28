@@ -1,11 +1,10 @@
 package com.example.banking.entity;
 
-import com.example.banking.entity.converter.AddressConverter;
 import com.example.banking.entity.converter.FullNameConverter;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
@@ -18,10 +17,11 @@ public class UserProfile {
 
     @Convert(converter = FullNameConverter.class)
     @Column(name = "customer_name", nullable = false)
+    @Valid
     private FullName customerName;
 
-    @Convert(converter = AddressConverter.class)
-    @Column(name = "customer_address", nullable = false)
+    @OneToOne(mappedBy = "userProfile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Valid
     private Address customerAddress;
 
     @Email( message = "Invalid email format")
@@ -77,8 +77,11 @@ public class UserProfile {
         return customerAddress;
     }
 
-    public void setCustomerAddress(Address customerAddress) {
-        this.customerAddress = customerAddress;
+    public void setCustomerAddress(Address address) {
+        this.customerAddress = address;
+        if (address != null){
+            address.setUserProfile(this);
+        }
     }
 
     public String getEmailId() {
@@ -113,7 +116,4 @@ public class UserProfile {
         this.aadhaarNumber = aadhaarNumber;
     }
 
-    public UserProfile createUser(UserProfile userProfile) {
-        return userProfile;
-    }
 }

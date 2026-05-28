@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/banking/api/v1/users")
+@CrossOrigin(origins = "*")
 @Tag(name = "User Profile Management", description = "APIs for creating and fetching banking customer profile")
 public class UserController {
 
@@ -52,7 +53,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Invalid request"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<UserProfile> createUser(@Valid@RequestBody UserProfile userProfile){
+    public ResponseEntity<UserProfile> createUser(@Valid @RequestBody UserProfile userProfile){
 
         UserProfile savedUser = services.createUser(userProfile);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
